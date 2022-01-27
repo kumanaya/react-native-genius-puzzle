@@ -18,11 +18,7 @@ See [here](https://www.figma.com/file/kxKCOgyP5PURlPU3eTTaaR/Genius---Memory-Puz
 <p align="center">
 	<img src="https://github.com/kumanaya/react-native-genius-puzzle/blob/master/images/1.png" width="200">
 	&nbsp; &nbsp; &nbsp; &nbsp
-	<img src="https://github.com/kumanaya/react-native-genius-puzzle/blob/master/images/2.png" width="200">
-	&nbsp; &nbsp; &nbsp; &nbsp
 	<img src="https://github.com/kumanaya/react-native-genius-puzzle/blob/master/images/3.png" width="200">
-	&nbsp; &nbsp; &nbsp; &nbsp
-	<img src="https://github.com/kumanaya/react-native-genius-puzzle/blob/master/images/4.png" width="200">
 </p>
 
 	
@@ -40,7 +36,7 @@ Genius uses a number of open source projects to work properly:
 Install the dependencies
 
 ```sh
-cd Genius
+cd react-native-genius-puzzle
 npm install
 ```
 
