@@ -10,10 +10,10 @@ const Game = () => {
     // Enable playback in silence mode
     Sound.setCategory('Playback');
 
-    const [buttonRed, setButtonRed] = useState("#590000");
-    const [buttonGreen, setButtonGreen] = useState("#013200");
-    const [buttonYellow, setButtonYellow] = useState("#867800");
-    const [buttonBlue, setButtonBlue] = useState("#00305C");
+    const [buttonRed, setButtonRed] = useState("rgba(95, 0, 0, 0.2)");
+    const [buttonGreen, setButtonGreen] = useState("rgba(1, 50, 0, 0.2)");
+    const [buttonYellow, setButtonYellow] = useState("rgba(134, 120, 0, 0.2)");
+    const [buttonBlue, setButtonBlue] = useState("rgba(0, 48, 92, 0.2)");
 
     const [sequence, setSequence] = useState([]);
     const [pressed, setPressed] = useState([]);
@@ -46,44 +46,43 @@ const Game = () => {
     const COLOR_UNABLED = [
         {
             id: 0,
-            color: "#590000"
+            color: "rgba(95, 0, 0, 0.2)"
         },
         {
             id: 1,
-            color: "#013200"
+            color: "rgba(1, 50, 0, 0.2)"
         },
         {
             id: 2,
-            color: "#867800"
+            color: "rgba(134, 120, 0, 0.2)"
         },
         {
             id: 3,
-            color: "#00305C"
+            color: "rgba(0, 48, 92, 0.2)"
         },
     ]
 
     const COLOR_ACTIVATED = [
         {
             id: 0,
-            color: "red"
+            color: "#DC7878"
         },
         {
             id: 1,
-            color: "green"
+            color: "#76D275"
         },
         {
             id: 2,
-            color: "yellow"
+            color: "#F7E64F"
         },
         {
             id: 3,
-            color: "blue"
+            color: "#6EA7DB"
         },
     ]
 
     function buttonSound(id) {
         var sound = new Sound(`piano_${id}.wav`, Sound.MAIN_BUNDLE, () => {
-            sound.setPan(1);
             sound.setVolume(100);
             sound.play();
         });
@@ -283,17 +282,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 32,
-        backgroundColor: "#140E1D",
+        backgroundColor: "#DDDDDD",
         flexDirection: "column"
     },
     titleText: {
         fontSize: 20,
-        fontWeight: "bold",
-        color: "white",
+        color: "#777777",
         textAlign: "center",
     },
     button: {
         flex: 1,
         height: Dimensions.get('window').width * 0.7,
+        borderRadius: 20,
     }
 });

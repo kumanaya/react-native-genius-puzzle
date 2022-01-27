@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 4,
         borderWidth: 1,
-        borderColor: "white",
+        borderColor: "#B7B7B7",
         backgroundColor: "rgba(52, 52, 52, alpha)",
     },
     title: {
-        color: "white",
+        color: "#777777",
         textTransform: "uppercase",
     }
 }); 
