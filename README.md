@@ -11,8 +11,20 @@ With the memory game, benefits such as the ability to develop concentration skil
 
 ## UI/UX
 ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
-	
- 
+
+See [here](https://www.figma.com/file/kxKCOgyP5PURlPU3eTTaaR/Genius---Memory-Puzzle?node-id=0%3A1)
+
+
+<p align="center">
+	<img src="https://github.com/kumanaya/react-native-genius-puzzle/blob/master/images/1.png" width="200">
+	&nbsp; &nbsp; &nbsp; &nbsp
+	<img src="https://github.com/kumanaya/react-native-genius-puzzle/blob/master/images/2.png" width="200">
+	&nbsp; &nbsp; &nbsp; &nbsp
+	<img src="https://github.com/kumanaya/react-native-genius-puzzle/blob/master/images/3.png" width="200">
+	&nbsp; &nbsp; &nbsp; &nbsp
+	<img src="https://github.com/kumanaya/react-native-genius-puzzle/blob/master/images/4.png" width="200">
+</p>
+
 	
 ## Tech
 
