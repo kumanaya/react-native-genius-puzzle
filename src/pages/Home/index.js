@@ -16,7 +16,9 @@ const Home = () => {
 
     return (
         <View style={styles.container}>
-            <Image source={logo} style={styles.logo} />
+            <View style={styles.logo}>
+                <Image source={logo} />
+            </View>
             <View style={styles.main}>
                 <Button title="Começar o jogo" onPressed={onPressLearnMore} />
             </View>
@@ -33,7 +35,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#DDDDDD",
     },
     logo: {
-        alignSelf: "center"
+        flex: 1,
+        justifyContent: 'center', 
+        alignItems: 'center',
     },
     main: {
         flex: 1,

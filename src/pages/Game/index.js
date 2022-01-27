@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Dimensions, StyleSheet, View, FlatList, Pressable, Text } from "react-native";
+import { Dimensions, StyleSheet, View, FlatList, Pressable, Text, Alert } from "react-native";
 
 import Sound from "react-native-sound";
 
 import Button from "../../components/button";
 
 const Game = () => {
-
-    // Enable playback in silence mode
-    Sound.setCategory('Playback');
 
     const [buttonRed, setButtonRed] = useState("rgba(95, 0, 0, 0.2)");
     const [buttonGreen, setButtonGreen] = useState("rgba(1, 50, 0, 0.2)");
@@ -17,12 +14,12 @@ const Game = () => {
 
     const [sequence, setSequence] = useState([]);
     const [pressed, setPressed] = useState([]);
-    const [score, setScore] = useState(0);
-
-    const [isPlay, setPlaying] = useState(false);
-    const [isHidden, setHidden] = useState(true);
 
     const [title, setTitle] = useState("");
+    const [score, setScore] = useState(0);
+
+    const [isLocked, setLocked] = useState(false);
+    const [isHidden, setHidden] = useState(true);
 
     var BUTTONS = [
         {
@@ -43,7 +40,7 @@ const Game = () => {
         },
     ]
 
-    const COLOR_UNABLED = [
+    const COLOR_DISABLED = [
         {
             id: 0,
             color: "rgba(95, 0, 0, 0.2)"
@@ -83,7 +80,6 @@ const Game = () => {
 
     function buttonSound(id) {
         var sound = new Sound(`piano_${id}.wav`, Sound.MAIN_BUNDLE, () => {
-            sound.setVolume(100);
             sound.play();
         });
     }
@@ -103,9 +99,9 @@ const Game = () => {
     async function resetGame() {
         await new Promise((resolve, reject) => {
 
-            console.log("resetando o jogo")
-
-            setPlaying(false);
+            setLocked(false);
+            setHidden(true);
+            setScore(0);
 
             sequence.length = 0;
             setSequence([]);
@@ -113,15 +109,12 @@ const Game = () => {
             pressed.length = 0;
             setPressed([]);
 
-            setHidden(true);
-
-            setScore(0);
             resolve();
         });
         initial();
     }
 
-    async function verifyPressed() {
+    function verifyPressed() {
 
         let i = 0;
 
@@ -129,11 +122,11 @@ const Game = () => {
 
         for (let id of pressed) {
             if (id !== sequence[i]) {
-                setPlaying(true);
                 gameOverSound();
-                alert("Você errou a sequência! Tente novamente");
-                setTitle("Tente novamente");
+                setLocked(true);
                 setHidden(false);
+                Alert.alert("Game-over", "Você errou a sequência! Tente novamente");
+                setTitle("Game-over");
                 isContinue = false;
                 break;
             }
@@ -149,11 +142,9 @@ const Game = () => {
     }
 
 
-    function onButtonPressed(id, color) {
+    function onButtonPressed(id) {
 
-        //alert("id: " + id + " cor: " + color);
-
-        if (isPlay === false) {
+        if (isLocked === false) {
 
             buttonTurnOn(id);
 
@@ -164,12 +155,13 @@ const Game = () => {
 
     }
 
-    async function buttonTurnOff() {
-        setButtonRed(COLOR_UNABLED[0]["color"]);
-        setButtonGreen(COLOR_UNABLED[1]["color"]);
-        setButtonYellow(COLOR_UNABLED[2]["color"]);
-        setButtonBlue(COLOR_UNABLED[3]["color"]);
+    function buttonTurnOff() {
+        setButtonRed(COLOR_DISABLED[0]["color"]);
+        setButtonGreen(COLOR_DISABLED[1]["color"]);
+        setButtonYellow(COLOR_DISABLED[2]["color"]);
+        setButtonBlue(COLOR_DISABLED[3]["color"]);
     }
+
     async function buttonTurnOn(id) {
         buttonTurnOff();
         switch (id) {
@@ -187,11 +179,11 @@ const Game = () => {
                 break;
         }
         buttonSound(id);
-        await timer(1000);
+        await delay(1000);
         buttonTurnOff();
     }
 
-    async function timer(seconds) {
+    async function delay(seconds) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve();
@@ -205,31 +197,23 @@ const Game = () => {
         )
     }
 
-    function debug() {
-        console.log("=== PLAYING === ");
-        console.log("score : " + score);
-        console.log("sequencia: " + sequence)
-    }
-
     async function getSequence() {
 
-        setPlaying(true);
+        setLocked(true);
         setTitle("Atente-se as sequências");
 
         const nextColor = getRandomNumber(0, 4);
         sequence.push(nextColor);
         setSequence(sequence);
 
-        debug();
-
         for (let id of sequence) {
-            await timer(3500);
+            await delay(2000);
             buttonTurnOn(id);
         }
 
-        await timer(2500);
+        await delay(2500);
 
-        setPlaying(false);
+        setLocked(false);
         setTitle("É a sua vez");
 
     }
@@ -241,6 +225,10 @@ const Game = () => {
 
     useEffect(() => {
         initial();
+
+        return () => {
+            resetGame();
+        };
     }, []);
 
     const TitleText = ({ text }) => (
@@ -270,7 +258,7 @@ const Game = () => {
                 numColumns={2}
                 key={item => item.id} />
             {
-                isHidden === true ? <View /> : <Button title="REINICIAR PARTIDA" onPressed={resetGame} />
+                isHidden === true ? <View /> : <View style={{ marginTop: 20, marginBottom: 20 }}><Button title="REINICIAR PARTIDA" onPressed={resetGame} /></View>
             }
         </View >
     )
