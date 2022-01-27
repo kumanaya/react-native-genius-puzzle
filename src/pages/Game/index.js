@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Dimensions, StyleSheet, View, FlatList, Pressable, Text } from "react-native";
 
+import Sound from "react-native-sound";
+
 import Button from "../../components/button";
 
 const Game = () => {
+
+    // Enable playback in silence mode
+    Sound.setCategory('Playback');
 
     const [buttonRed, setButtonRed] = useState("#590000");
     const [buttonGreen, setButtonGreen] = useState("#013200");
@@ -76,10 +81,32 @@ const Game = () => {
         },
     ]
 
+    function buttonSound(id) {
+        var sound = new Sound(`piano_${id}.wav`, Sound.MAIN_BUNDLE, () => {
+            sound.setPan(1);
+            sound.setVolume(100);
+            sound.play();
+        });
+    }
+
+    function gameOverSound() {
+        var sound = new Sound('game_over.wav', Sound.MAIN_BUNDLE, () => {
+            sound.play();
+        });
+    }
+
+    function startupSound() {
+        var sound = new Sound('startup.wav', Sound.MAIN_BUNDLE, () => {
+            sound.play();
+        });
+    }
+
     async function resetGame() {
         await new Promise((resolve, reject) => {
 
             console.log("resetando o jogo")
+
+            setPlaying(false);
 
             sequence.length = 0;
             setSequence([]);
@@ -103,6 +130,8 @@ const Game = () => {
 
         for (let id of pressed) {
             if (id !== sequence[i]) {
+                setPlaying(true);
+                gameOverSound();
                 alert("Você errou a sequência! Tente novamente");
                 setTitle("Tente novamente");
                 setHidden(false);
@@ -158,6 +187,7 @@ const Game = () => {
                 setButtonBlue(COLOR_ACTIVATED[id]["color"]);
                 break;
         }
+        buttonSound(id);
         await timer(1000);
         buttonTurnOff();
     }
@@ -206,6 +236,7 @@ const Game = () => {
     }
 
     function initial() {
+        startupSound();
         getSequence();
     }
 
