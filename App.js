@@ -1,15 +1,22 @@
 import React from 'react';
 
 import {
-  SafeAreaView,
+  StatusBar,
 } from 'react-native';
+
+import Routes from "./src/routes";
 
 import Loading from "./src/components/loading";
 
 export default function App() {
   return (
     <>
-      <Loading />
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent
+      />
+      <Routes />
     </>
   );
 }
