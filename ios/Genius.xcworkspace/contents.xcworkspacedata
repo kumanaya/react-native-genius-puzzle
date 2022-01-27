@@ -2,6 +2,24 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../../../media/game_over.wav">
+   </FileRef>
+   <FileRef
+      location = "group:../../../media/piano_0.wav">
+   </FileRef>
+   <FileRef
+      location = "group:../../../media/piano_1.wav">
+   </FileRef>
+   <FileRef
+      location = "group:../../../media/piano_2.wav">
+   </FileRef>
+   <FileRef
+      location = "group:../../../media/piano_3.wav">
+   </FileRef>
+   <FileRef
+      location = "group:../../../media/startup.wav">
+   </FileRef>
+   <FileRef
       location = "group:Genius.xcodeproj">
    </FileRef>
    <FileRef
