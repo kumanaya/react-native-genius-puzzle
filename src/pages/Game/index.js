@@ -13,6 +13,8 @@ import Sound from 'react-native-sound';
 import Button from '../../components/button';
 
 const Game = () => {
+  Sound.setCategory('Playback');
+
   const [buttonRed, setButtonRed] = useState('rgba(95, 0, 0, 0.2)');
   const [buttonGreen, setButtonGreen] = useState('rgba(1, 50, 0, 0.2)');
   const [buttonYellow, setButtonYellow] = useState('rgba(134, 120, 0, 0.2)');
@@ -85,20 +87,41 @@ const Game = () => {
   ];
 
   function buttonSound(id) {
-    var sound = new Sound(`piano_${id}.wav`, Sound.MAIN_BUNDLE, () => {
-      sound.play();
+    var sound = new Sound(`piano_${id}.wav`, Sound.MAIN_BUNDLE, e => {
+      if (e) {
+        console.log('error', e);
+      } else {
+        //console.log('duration', sound.getDuration());
+        sound.play(() => {
+          sound.release();
+        });
+      }
     });
   }
 
   function gameOverSound() {
-    var sound = new Sound('game_over.wav', Sound.MAIN_BUNDLE, () => {
-      sound.play();
+    var sound = new Sound('game_over.wav', Sound.MAIN_BUNDLE, e => {
+      if (e) {
+        console.log('error', e);
+      } else {
+        //console.log('duration', sound.getDuration());
+        sound.play(() => {
+          sound.release();
+        });
+      }
     });
   }
 
   function startupSound() {
-    var sound = new Sound('startup.wav', Sound.MAIN_BUNDLE, () => {
-      sound.play();
+    var sound = new Sound('startup.wav', Sound.MAIN_BUNDLE, e => {
+      if (e) {
+        console.log('error', e);
+      } else {
+        //console.log('duration', sound.getDuration());
+        sound.play(() => {
+          sound.release();
+        });
+      }
     });
   }
 
@@ -219,10 +242,12 @@ const Game = () => {
   }
 
   useEffect(() => {
-    initial();
-
+    let isMounted = true;
+    if (isMounted) {
+      initial();
+    }
     return () => {
-      resetGame();
+      isMounted = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
