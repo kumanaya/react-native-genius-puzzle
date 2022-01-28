@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {
-  Dimensions,
   StyleSheet,
   View,
-  FlatList,
   Pressable,
   Text,
   Alert,
+  Dimensions,
 } from 'react-native';
 
 import Sound from 'react-native-sound';
@@ -234,12 +233,18 @@ const Game = () => {
     <Pressable
       key={id}
       onPress={() => onButtonPressed(id, color)}
-      style={styles.viewButton}>
+      style={styles.pressable}>
       <View style={[styles.button, {backgroundColor: color}]} />
     </Pressable>
   );
 
-  const renderItem = ({item}) => <Item id={item.id} color={item.color} />;
+  const renderPressalbe = props => {
+    let component = [];
+    BUTTONS.map((item, index) => {
+      component.push(<Item key={index} id={item.id} color={item.color} />);
+    });
+    return component;
+  };
 
   return (
     <View style={styles.container}>
@@ -247,18 +252,11 @@ const Game = () => {
         <TitleText text={`Score: ${score}`} />
       </View>
       <TitleText text={title} />
-      <FlatList
-        data={BUTTONS}
-        renderItem={renderItem}
-        numColumns={2}
-        key={item => item.id}
-      />
+      <View style={styles.viewPressable}>{renderPressalbe()}</View>
       {isHidden === true ? (
         <View />
       ) : (
-        <View style={styles.viewRestart}>
-          <Button title="REINICIAR PARTIDA" onPressed={resetGame} />
-        </View>
+        <Button title="REINICIAR PARTIDA" onPressed={resetGame} />
       )}
     </View>
   );
@@ -275,24 +273,27 @@ const styles = StyleSheet.create({
   },
   viewScore: {
     flexDirection: 'row-reverse',
-    paddingBottom: 10,
+    padding: 10,
   },
   titleText: {
     fontSize: 20,
     color: '#777777',
     textAlign: 'center',
   },
-  viewButton: {
-    flex: 1,
+  viewPressable: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    paddingTop: 14,
+    paddingBottom: 14,
+  },
+  pressable: {
     padding: 10,
   },
   button: {
-    flex: 1,
-    height: Dimensions.get('window').width * 0.7,
+    height: (Dimensions.get('screen').width - 60) / 1.6,
+    width: (Dimensions.get('screen').width - 60) / 3,
     borderRadius: 20,
-  },
-  viewRestart: {
-    marginTop: 20,
-    marginBottom: 20,
   },
 });
